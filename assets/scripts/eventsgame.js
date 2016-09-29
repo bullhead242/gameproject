@@ -5,7 +5,7 @@ let turnCount = 0;
 let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
 let switchTurn = function() {
-    turnCount += 1; 
+    // turnCount += 1;
    if (player === 'x') {
      $("#messages").text("Hey it\'s player " + player +"\'s turn!");
      player = 'o';
@@ -17,16 +17,16 @@ let switchTurn = function() {
    }
  };
 
-function printBoard() {
-  $("#box-A").text(gameBoard[0]);
-  $("#box-B").text(gameBoard[1]);
-  $("#box-C").text(gameBoard[2]);
-  $("#box-D").text(gameBoard[3]);
-  $("#box-E").text(gameBoard[4]);
-  $("#box-F").text(gameBoard[5]);
-  $("#box-G").text(gameBoard[6]);
-  $("#box-H").text(gameBoard[7]);
-  $("#box-I").text(gameBoard[8]);
+function printBoard(board) {
+  $("#box-A").text(board[0]);
+  $("#box-B").text(board[1]);
+  $("#box-C").text(board[2]);
+  $("#box-D").text(board[3]);
+  $("#box-E").text(board[4]);
+  $("#box-F").text(board[5]);
+  $("#box-G").text(board[6]);
+  $("#box-H").text(board[7]);
+  $("#box-I").text(board[8]);
 }
 
 module.exports = {

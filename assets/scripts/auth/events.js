@@ -6,8 +6,6 @@ const ui = require('./ui');
 const eventsGame = require('../eventsgame');
 const winlogic = require('../winlogic');
 let cellIndex = 0;
-let turnCount = eventsGame.turnCount;
-
 
 const onSignUp = function (event) {
   event.preventDefault();
@@ -45,10 +43,12 @@ const onSignOut = function (event) {
 
 function newGame() {
   let player = 'x';
+  let turnCount = eventsGame.turnCount;
   api.startNewGame()
     .done(ui.startGame)
     .fail(ui.failure);
   $("#messages").text("New game? Good luck!" );
+  eventsGame.gameBoard = ["", "", "", "", "", "", "", "", ""];
 }
 
 function whenClicked(event) {
@@ -56,9 +56,11 @@ function whenClicked(event) {
   if (eventsGame.gameBoard[cellIndex] === ""){
     eventsGame.gameBoard[cellIndex] = eventsGame.switchTurn();
     api.updateBoard();
-    eventsGame.printBoard();
-    winlogic.doesXWin();
-    winlogic.doesOWin();
+    eventsGame.printBoard(eventsGame.gameBoard);
+    winlogic.doesXWin(eventsGame.gameBoard);
+    winlogic.doesOWin(eventsGame.gameBoard);
+    eventsGame.turnCount += 1;
+    winlogic.tieGame(eventsGame.turnCount);
   } else {
     $("#messages").text("CAN'T DO THAT" );
   }

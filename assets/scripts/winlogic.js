@@ -2,7 +2,7 @@
 
 const eventsGame = require('./eventsgame');
 let gameBoard = eventsGame.gameBoard;
-let turnCount = eventsGame.gameBoard;
+let turnCount = eventsGame.turnCount;
 
 function winnerO() {
   $("#messages").text("PLAYER O WINS!" );
@@ -17,49 +17,47 @@ function winnerX() {
 }
 
 function tieGame() {
-  if (turnCount === 8) {
+  console.log(eventsGame.turnCount);
+  if ((eventsGame.turnCount%9) === 0) {
     $('#messages').text('TIE GAME');
     $(".game-cell").hide();
   }
 }
 
-let doesXWin = function() {
-  if (((gameBoard[0] === 'x') && (gameBoard[1] === 'x') && (gameBoard[2] === 'x')) ||
-    ((gameBoard[3] === 'x') && (gameBoard[4] === 'x') && (gameBoard[5] === 'x')) ||
-    ((gameBoard[6] === 'x') && (gameBoard[7] === 'x') && (gameBoard[8] === 'x')) ||
+let doesXWin = function(board, turnCount) {
+  if (((board[0] === 'x') && (board[1] === 'x') && (board[2] === 'x')) ||
+    ((board[3] === 'x') && (board[4] === 'x') && (board[5] === 'x')) ||
+    ((board[6] === 'x') && (board[7] === 'x') && (board[8] === 'x')) ||
     // ^horizontals
-    ((gameBoard[0] === 'x') && (gameBoard[3] === 'x') && (gameBoard[6] === 'x')) ||
-    ((gameBoard[1] === 'x') && (gameBoard[4] === 'x') && (gameBoard[7] === 'x')) ||
-    ((gameBoard[2] === 'x') && (gameBoard[5] === 'x') && (gameBoard[8] === 'x')) ||
+    ((board[0] === 'x') && (board[3] === 'x') && (board[6] === 'x')) ||
+    ((board[1] === 'x') && (board[4] === 'x') && (board[7] === 'x')) ||
+    ((board[2] === 'x') && (board[5] === 'x') && (board[8] === 'x')) ||
     // ^verticals
-    ((gameBoard[0] === 'x') && (gameBoard[4] === 'x') && (gameBoard[8] === 'x')) ||
-    ((gameBoard[2] === 'x') && (gameBoard[4] === 'x') && (gameBoard[6] === 'x'))){
+    ((board[0] === 'x') && (board[4] === 'x') && (board[8] === 'x')) ||
+    ((board[2] === 'x') && (board[4] === 'x') && (board[6] === 'x'))){
     // ^diagonals
     winnerX();
-  } else {
-    tieGame();
   }
 };
 
-let doesOWin = function() {
-  if (((gameBoard[0] === 'o') && (gameBoard[1] === 'o') && (gameBoard[2] === 'o')) ||
-    ((gameBoard[3] === 'o') && (gameBoard[4] === 'o') && (gameBoard[5] === 'o')) ||
-    ((gameBoard[6] === 'o') && (gameBoard[7] === 'o') && (gameBoard[8] === 'o')) ||
+let doesOWin = function(board) {
+  if (((board[0] === 'o') && (board[1] === 'o') && (board[2] === 'o')) ||
+    ((board[3] === 'o') && (board[4] === 'o') && (board[5] === 'o')) ||
+    ((board[6] === 'o') && (board[7] === 'o') && (board[8] === 'o')) ||
     // ^horizontals
-    ((gameBoard[0] === 'o') && (gameBoard[3] === 'o') && (gameBoard[6] === 'o')) ||
-    ((gameBoard[1] === 'o') && (gameBoard[4] === 'o') && (gameBoard[7] === 'o')) ||
-    ((gameBoard[2] === 'o') && (gameBoard[5] === 'o') && (gameBoard[8] === 'o')) ||
+    ((board[0] === 'o') && (board[3] === 'o') && (board[6] === 'o')) ||
+    ((board[1] === 'o') && (board[4] === 'o') && (board[7] === 'o')) ||
+    ((board[2] === 'o') && (board[5] === 'o') && (board[8] === 'o')) ||
     // ^verticals
-    ((gameBoard[0] === 'o') && (gameBoard[4] === 'o') && (gameBoard[8] === 'o')) ||
-    ((gameBoard[2] === 'o') && (gameBoard[4] === 'o') && (gameBoard[6] === 'o'))) {
+    ((board[0] === 'o') && (board[4] === 'o') && (board[8] === 'o')) ||
+    ((board[2] === 'o') && (board[4] === 'o') && (board[6] === 'o'))) {
     // ^diagonals
     winnerO();
-  } else {
-    tieGame();
   }
 };
 
 module.exports = {
   doesXWin,
-  doesOWin
+  doesOWin,
+  tieGame,
 };
