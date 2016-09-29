@@ -2,12 +2,14 @@
 
 const app = require('../app');
 const eventsGame = require('../eventsgame');
+let turnCount = eventsGame.turnCount;
+let gameBoard = eventsGame.gameBoard;
 
 const signUp = (data) => {
   return $.ajax({
     url: app.host + '/sign-up',
     method: 'POST',
-    data:data,
+    data:data
   });
 };
 
@@ -51,6 +53,9 @@ const getGames = () => {
 };
 
 const startNewGame = () => {
+  let turnCount = 0;
+  gameBoard = ["", "", "", "", "", "", "", "", ""];
+    turnCount = 0;
   return $.ajax({
     url: app.host + '/games/',
     method: 'POST',
@@ -60,7 +65,6 @@ const startNewGame = () => {
       data: {
         game: "",
           "over": false,
-
             }
   });
 };
@@ -108,5 +112,6 @@ module.exports = {
   getGames,
   startNewGame,
   updateBoard,
-  gameOver
+  gameOver,
+  turnCount,
 };

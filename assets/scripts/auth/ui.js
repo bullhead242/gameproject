@@ -3,7 +3,6 @@
 const app = require('../app');
 const api = require('./api');
 
-
 const failure = () => {
   $("#messages").modal("Ooopsy Daisy!");
 };
@@ -47,7 +46,6 @@ const signOutSuccess = () => {
 const startGame = (data) => {
   app.game = data.game;
   app.turn = 0;
-  let gameBoard = ["", "", "", "", "", "", "", "", ""];
   $(".game-cell").show();
   $('.game-cell').each(function(i) {
     $(this).text(app.game.cells[i]);

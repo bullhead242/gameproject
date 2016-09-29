@@ -5,14 +5,13 @@ const api = require('./api');
 const ui = require('./ui');
 const eventsGame = require('../eventsgame');
 const winlogic = require('../winlogic');
-const app = require('../app');
 let cellIndex = 0;
-let gameBoard = eventsGame.gameBoard;
+let turnCount = eventsGame.turnCount;
 
 
 const onSignUp = function (event) {
-  let data = getFormFields(event.target);
   event.preventDefault();
+  let data = getFormFields(event.target);
 
   api.signUp(data)
     .done(ui.signUpSuccess)
@@ -20,8 +19,8 @@ const onSignUp = function (event) {
 };
 
 const onSignIn = function (event) {
-  let data = getFormFields(event.target);
   event.preventDefault();
+  let data = getFormFields(event.target);
   api.signIn(data)
     .then(ui.signInSuccess)
     .fail(ui.failure);
@@ -46,6 +45,7 @@ const onSignOut = function (event) {
 
 function newGame() {
   let player = 'x';
+  console.log(eventsGame.gameBoard);
   api.startNewGame()
     .done(ui.startGame)
     .fail(ui.failure);
@@ -60,7 +60,7 @@ function whenClicked(event) {
     eventsGame.printBoard();
     winlogic.doesXWin();
     winlogic.doesOWin();
-    // debugger;
+    console.log(turnCount);
   } else {
     $("#messages").text("CAN'T DO THAT" );
   }

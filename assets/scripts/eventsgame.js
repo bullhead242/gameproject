@@ -1,9 +1,11 @@
 'use strict';
 
 let player = 'o';
+let turnCount = 0;
 let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
 let switchTurn = function() {
+    turnCount += 1; 
    if (player === 'x') {
      $("#messages").text("Hey it\'s player " + player +"\'s turn!");
      player = 'o';
@@ -31,4 +33,5 @@ module.exports = {
   printBoard,
   switchTurn,
   gameBoard,
+  turnCount
 };

@@ -1,19 +1,28 @@
 'use strict';
 
-const app = ('./app');
 const eventsGame = require('./eventsgame');
-// let cellIndex = eventsGame.cellIndex;
-// let player = eventsGame.player;
 let gameBoard = eventsGame.gameBoard;
+let turnCount = eventsGame.gameBoard;
 
 function winnerO() {
   $("#messages").text("PLAYER O WINS!" );
   $(".game-cell").hide();
+  turnCount = 0;
+  console.log(gameBoard);
 }
 
 function winnerX() {
   $("#messages").text("PLAYER X WINS!" );
   $(".game-cell").hide();
+  turnCount = 0;
+  console.log(gameBoard);
+}
+
+function tieGame() {
+  if (turnCount === 8) {
+    $('#messages').text('TIE GAME');
+    $(".game-cell").hide();
+  }
 }
 
 let doesXWin = function() {
@@ -29,6 +38,8 @@ let doesXWin = function() {
     ((gameBoard[2] === 'x') && (gameBoard[4] === 'x') && (gameBoard[6] === 'x'))){
     // ^diagonals
     winnerX();
+  } else {
+    tieGame();
   }
 };
 
@@ -45,6 +56,8 @@ let doesOWin = function() {
     ((gameBoard[2] === 'o') && (gameBoard[4] === 'o') && (gameBoard[6] === 'o'))) {
     // ^diagonals
     winnerO();
+  } else {
+    tieGame();
   }
 };
 
