@@ -51,18 +51,18 @@ function newGame() {
   $("#messages").text("New game? Good luck!" );
 }
 
-function whenClicked(event) {
-  let cellIndex = parseInt(event.target.dataset.index);
-  if (eventsGame.gameBoard[cellIndex] === ""){
-    eventsGame.gameBoard[cellIndex] = eventsGame.switchTurn();
-    api.updateBoard();
-    eventsGame.printBoard();
-    winlogic.doesXWin();
-    winlogic.doesOWin();
-  } else {
-    $("#messages").text("CAN'T DO THAT" );
-  }
-}
+// function whenClicked(event) {
+//   let cellIndex = parseInt(event.target.dataset.index);
+//   if (eventsGame.gameBoard[cellIndex] === ""){
+//     eventsGame.gameBoard[cellIndex] = eventsGame.switchTurn();
+//     api.updateBoard();
+//     eventsGame.printBoard();
+//     winlogic.doesXWin();
+//     winlogic.doesOWin();
+//   } else {
+//     $("#messages").text("CAN'T DO THAT" );
+//   }
+// }
 
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp);
