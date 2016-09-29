@@ -54,7 +54,6 @@ const getGames = () => {
 
 const startNewGame = () => {
   let turnCount = 0;
-  gameBoard = ["", "", "", "", "", "", "", "", ""];
     turnCount = 0;
   return $.ajax({
     url: app.host + '/games/',
@@ -67,6 +66,7 @@ const startNewGame = () => {
           "over": false,
             }
   });
+  //eventsGame.gameBoard = ["", "", "", "", "", "", "", "", ""];
 };
 
 const gameOver = function () {

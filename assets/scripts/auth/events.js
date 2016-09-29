@@ -45,11 +45,11 @@ const onSignOut = function (event) {
 
 function newGame() {
   let player = 'x';
-  console.log(eventsGame.gameBoard);
   api.startNewGame()
     .done(ui.startGame)
     .fail(ui.failure);
   $("#messages").text("New game? Good luck!" );
+  eventsGame.gameBoard = ["", "", "", "", "", "", "", "", ""];
 }
 
 function whenClicked(event) {
@@ -57,10 +57,9 @@ function whenClicked(event) {
   if (eventsGame.gameBoard[cellIndex] === ""){
     eventsGame.gameBoard[cellIndex] = eventsGame.switchTurn();
     api.updateBoard();
-    eventsGame.printBoard();
-    winlogic.doesXWin();
-    winlogic.doesOWin();
-    console.log(turnCount);
+    eventsGame.printBoard(eventsGame.gameBoard);
+    winlogic.doesXWin(eventsGame.gameBoard);
+    winlogic.doesOWin(eventsGame.gameBoard);
   } else {
     $("#messages").text("CAN'T DO THAT" );
   }
