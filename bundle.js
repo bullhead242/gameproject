@@ -60,7 +60,6 @@ webpackJsonp([0],[
 	var eventsGame = __webpack_require__(8);
 	var winlogic = __webpack_require__(10);
 	var cellIndex = 0;
-	var turnCount = eventsGame.turnCount;
 
 	var onSignUp = function onSignUp(event) {
 	  event.preventDefault();
@@ -90,8 +89,10 @@ webpackJsonp([0],[
 
 	function newGame() {
 	  var player = 'x';
+	  var turnCount = eventsGame.turnCount;
 	  api.startNewGame().done(ui.startGame).fail(ui.failure);
 	  $("#messages").text("New game? Good luck!");
+	  eventsGame.gameBoard = ["", "", "", "", "", "", "", "", ""];
 	}
 
 	function whenClicked(event) {
@@ -99,9 +100,11 @@ webpackJsonp([0],[
 	  if (eventsGame.gameBoard[cellIndex] === "") {
 	    eventsGame.gameBoard[cellIndex] = eventsGame.switchTurn();
 	    api.updateBoard();
-	    eventsGame.printBoard();
-	    winlogic.doesXWin();
-	    winlogic.doesOWin();
+	    eventsGame.printBoard(eventsGame.gameBoard);
+	    winlogic.doesXWin(eventsGame.gameBoard);
+	    winlogic.doesOWin(eventsGame.gameBoard);
+	    eventsGame.turnCount += 1;
+	    winlogic.tieGame(eventsGame.turnCount);
 	  } else {
 	    $("#messages").text("CAN'T DO THAT");
 	  }
@@ -198,8 +201,6 @@ webpackJsonp([0],[
 
 	var app = __webpack_require__(7);
 	var eventsGame = __webpack_require__(8);
-	var turnCount = eventsGame.turnCount;
-	var gameBoard = eventsGame.gameBoard;
 
 	var signUp = function signUp(data) {
 	  return $.ajax({
@@ -249,9 +250,6 @@ webpackJsonp([0],[
 	};
 
 	var startNewGame = function startNewGame() {
-	  var turnCount = 0;
-	  gameBoard = ["", "", "", "", "", "", "", "", ""];
-	  turnCount = 0;
 	  return $.ajax({
 	    url: app.host + '/games/',
 	    method: 'POST',
@@ -308,8 +306,7 @@ webpackJsonp([0],[
 	  getGames: getGames,
 	  startNewGame: startNewGame,
 	  updateBoard: updateBoard,
-	  gameOver: gameOver,
-	  turnCount: turnCount
+	  gameOver: gameOver
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
@@ -336,7 +333,7 @@ webpackJsonp([0],[
 	var gameBoard = ["", "", "", "", "", "", "", "", ""];
 
 	var switchTurn = function switchTurn() {
-	  turnCount += 1;
+	  // turnCount += 1;
 	  if (player === 'x') {
 	    $("#messages").text("Hey it\'s player " + player + "\'s turn!");
 	    player = 'o';
@@ -348,16 +345,16 @@ webpackJsonp([0],[
 	  }
 	};
 
-	function printBoard() {
-	  $("#box-A").text(gameBoard[0]);
-	  $("#box-B").text(gameBoard[1]);
-	  $("#box-C").text(gameBoard[2]);
-	  $("#box-D").text(gameBoard[3]);
-	  $("#box-E").text(gameBoard[4]);
-	  $("#box-F").text(gameBoard[5]);
-	  $("#box-G").text(gameBoard[6]);
-	  $("#box-H").text(gameBoard[7]);
-	  $("#box-I").text(gameBoard[8]);
+	function printBoard(board) {
+	  $("#box-A").text(board[0]);
+	  $("#box-B").text(board[1]);
+	  $("#box-C").text(board[2]);
+	  $("#box-D").text(board[3]);
+	  $("#box-E").text(board[4]);
+	  $("#box-F").text(board[5]);
+	  $("#box-G").text(board[6]);
+	  $("#box-H").text(board[7]);
+	  $("#box-I").text(board[8]);
 	}
 
 	module.exports = {
@@ -441,7 +438,7 @@ webpackJsonp([0],[
 
 	var eventsGame = __webpack_require__(8);
 	var gameBoard = eventsGame.gameBoard;
-	var turnCount = eventsGame.gameBoard;
+	var turnCount = eventsGame.turnCount;
 
 	function winnerO() {
 	  $("#messages").text("PLAYER O WINS!");
@@ -456,41 +453,39 @@ webpackJsonp([0],[
 	}
 
 	function tieGame() {
-	  if (turnCount === 8) {
+	  console.log(eventsGame.turnCount);
+	  if (eventsGame.turnCount % 9 === 0) {
 	    $('#messages').text('TIE GAME');
 	    $(".game-cell").hide();
 	  }
 	}
 
-	var doesXWin = function doesXWin() {
-	  if (gameBoard[0] === 'x' && gameBoard[1] === 'x' && gameBoard[2] === 'x' || gameBoard[3] === 'x' && gameBoard[4] === 'x' && gameBoard[5] === 'x' || gameBoard[6] === 'x' && gameBoard[7] === 'x' && gameBoard[8] === 'x' ||
+	var doesXWin = function doesXWin(board, turnCount) {
+	  if (board[0] === 'x' && board[1] === 'x' && board[2] === 'x' || board[3] === 'x' && board[4] === 'x' && board[5] === 'x' || board[6] === 'x' && board[7] === 'x' && board[8] === 'x' ||
 	  // ^horizontals
-	  gameBoard[0] === 'x' && gameBoard[3] === 'x' && gameBoard[6] === 'x' || gameBoard[1] === 'x' && gameBoard[4] === 'x' && gameBoard[7] === 'x' || gameBoard[2] === 'x' && gameBoard[5] === 'x' && gameBoard[8] === 'x' ||
+	  board[0] === 'x' && board[3] === 'x' && board[6] === 'x' || board[1] === 'x' && board[4] === 'x' && board[7] === 'x' || board[2] === 'x' && board[5] === 'x' && board[8] === 'x' ||
 	  // ^verticals
-	  gameBoard[0] === 'x' && gameBoard[4] === 'x' && gameBoard[8] === 'x' || gameBoard[2] === 'x' && gameBoard[4] === 'x' && gameBoard[6] === 'x') {
+	  board[0] === 'x' && board[4] === 'x' && board[8] === 'x' || board[2] === 'x' && board[4] === 'x' && board[6] === 'x') {
 	    // ^diagonals
 	    winnerX();
-	  } else {
-	    tieGame();
 	  }
 	};
 
-	var doesOWin = function doesOWin() {
-	  if (gameBoard[0] === 'o' && gameBoard[1] === 'o' && gameBoard[2] === 'o' || gameBoard[3] === 'o' && gameBoard[4] === 'o' && gameBoard[5] === 'o' || gameBoard[6] === 'o' && gameBoard[7] === 'o' && gameBoard[8] === 'o' ||
+	var doesOWin = function doesOWin(board) {
+	  if (board[0] === 'o' && board[1] === 'o' && board[2] === 'o' || board[3] === 'o' && board[4] === 'o' && board[5] === 'o' || board[6] === 'o' && board[7] === 'o' && board[8] === 'o' ||
 	  // ^horizontals
-	  gameBoard[0] === 'o' && gameBoard[3] === 'o' && gameBoard[6] === 'o' || gameBoard[1] === 'o' && gameBoard[4] === 'o' && gameBoard[7] === 'o' || gameBoard[2] === 'o' && gameBoard[5] === 'o' && gameBoard[8] === 'o' ||
+	  board[0] === 'o' && board[3] === 'o' && board[6] === 'o' || board[1] === 'o' && board[4] === 'o' && board[7] === 'o' || board[2] === 'o' && board[5] === 'o' && board[8] === 'o' ||
 	  // ^verticals
-	  gameBoard[0] === 'o' && gameBoard[4] === 'o' && gameBoard[8] === 'o' || gameBoard[2] === 'o' && gameBoard[4] === 'o' && gameBoard[6] === 'o') {
+	  board[0] === 'o' && board[4] === 'o' && board[8] === 'o' || board[2] === 'o' && board[4] === 'o' && board[6] === 'o') {
 	    // ^diagonals
 	    winnerO();
-	  } else {
-	    tieGame();
 	  }
 	};
 
 	module.exports = {
 	  doesXWin: doesXWin,
-	  doesOWin: doesOWin
+	  doesOWin: doesOWin,
+	  tieGame: tieGame
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
