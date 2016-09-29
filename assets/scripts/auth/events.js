@@ -45,7 +45,6 @@ const onSignOut = function (event) {
 
 function newGame() {
   let player = 'x';
-  console.log(eventsGame.gameBoard);
   api.startNewGame()
     .done(ui.startGame)
     .fail(ui.failure);
@@ -60,7 +59,6 @@ function whenClicked(event) {
     eventsGame.printBoard();
     winlogic.doesXWin();
     winlogic.doesOWin();
-    console.log(turnCount);
   } else {
     $("#messages").text("CAN'T DO THAT" );
   }
@@ -81,5 +79,4 @@ module.exports = {
   addHandlers,
   cellIndex,
   whenClicked,
-  // player,
 };

@@ -8,14 +8,12 @@ function winnerO() {
   $("#messages").text("PLAYER O WINS!" );
   $(".game-cell").hide();
   turnCount = 0;
-  console.log(gameBoard);
 }
 
 function winnerX() {
   $("#messages").text("PLAYER X WINS!" );
   $(".game-cell").hide();
   turnCount = 0;
-  console.log(gameBoard);
 }
 
 function tieGame() {
