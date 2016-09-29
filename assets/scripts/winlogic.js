@@ -7,20 +7,21 @@ let turnCount = eventsGame.turnCount;
 function winnerO() {
   $("#messages").text("PLAYER O WINS!" );
   $(".game-cell").hide();
-  turnCount = 0;
+  eventsGame.turnCount = 0;
 }
 
 function winnerX() {
   $("#messages").text("PLAYER X WINS!" );
   $(".game-cell").hide();
-  turnCount = 0;
+  eventsGame.turnCount = 0;
 }
 
 function tieGame() {
   console.log(eventsGame.turnCount);
-  if ((eventsGame.turnCount%9) === 0) {
+  if (eventsGame.turnCount === 9) {
     $('#messages').text('TIE GAME');
     $(".game-cell").hide();
+    eventsGame.turnCount = 0;
   }
 }
 

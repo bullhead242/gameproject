@@ -56,9 +56,9 @@ function whenClicked(event) {
     eventsGame.gameBoard[cellIndex] = eventsGame.switchTurn();
     api.updateBoard();
     eventsGame.printBoard(eventsGame.gameBoard);
+    eventsGame.turnCount += 1;
     winlogic.doesXWin(eventsGame.gameBoard);
     winlogic.doesOWin(eventsGame.gameBoard);
-    eventsGame.turnCount += 1;
     winlogic.tieGame(eventsGame.turnCount);
   } else {
     $("#messages").text("CAN'T DO THAT" );
