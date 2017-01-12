@@ -83,7 +83,6 @@ webpackJsonp([0],[
 
 	var onSignOut = function onSignOut(event) {
 	  event.preventDefault();
-
 	  api.signOut().done(ui.signOutSuccess).fail(ui.failure);
 	};
 
@@ -101,9 +100,9 @@ webpackJsonp([0],[
 	    eventsGame.gameBoard[cellIndex] = eventsGame.switchTurn();
 	    api.updateBoard();
 	    eventsGame.printBoard(eventsGame.gameBoard);
+	    eventsGame.turnCount += 1;
 	    winlogic.doesXWin(eventsGame.gameBoard);
 	    winlogic.doesOWin(eventsGame.gameBoard);
-	    eventsGame.turnCount += 1;
 	    winlogic.tieGame(eventsGame.turnCount);
 	  } else {
 	    $("#messages").text("CAN'T DO THAT");
@@ -317,7 +316,7 @@ webpackJsonp([0],[
 	'use strict';
 
 	var app = {
-	  host: 'https://aqueous-atoll-85096.herokuapp.com'
+	  host: 'https://tictactoechampion.herokuapp.com/'
 	};
 
 	module.exports = app;
@@ -443,20 +442,21 @@ webpackJsonp([0],[
 	function winnerO() {
 	  $("#messages").text("PLAYER O WINS!");
 	  $(".game-cell").hide();
-	  turnCount = 0;
+	  eventsGame.turnCount = 0;
 	}
 
 	function winnerX() {
 	  $("#messages").text("PLAYER X WINS!");
 	  $(".game-cell").hide();
-	  turnCount = 0;
+	  eventsGame.turnCount = 0;
 	}
 
 	function tieGame() {
 	  console.log(eventsGame.turnCount);
-	  if (eventsGame.turnCount % 9 === 0) {
+	  if (eventsGame.turnCount === 9) {
 	    $('#messages').text('TIE GAME');
 	    $(".game-cell").hide();
+	    eventsGame.turnCount = 0;
 	  }
 	}
 
